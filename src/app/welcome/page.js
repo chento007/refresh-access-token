@@ -19,14 +19,11 @@ export default function Welcome() {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log("user", user);
       dispatch(setCurrentUser(user));
     }
   }, []);
 
   // removeRefreshToken()
-
-  console.log("user", user);
 
   let content = null;
   

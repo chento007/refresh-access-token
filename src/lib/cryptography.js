@@ -22,33 +22,11 @@ export function encrypt(message, secretKey) {
 export function storeRefresh(refresh) {
   try {
     // Store 'username' in localStorage
-    localStorage.setItem("username", "admin");
-    console.log("username store success");
-
-    // Check if the value was stored successfully
-    const username = localStorage.getItem("username");
-    if (username === "admin") {
-      console.log("Confirmed: 'username' is stored in localStorage.");
-    } else {
-      console.error("Failed to confirm: 'username' is not stored in localStorage.");
-    }
-
-    // Store 'refresh' in secureLocalStorage
     secureLocalStorage.setItem(
       process.env.NEXT_PUBLIC_SECURE_LOCAL_STORAGE_PREFIX,
       refresh
     );
-    console.log("refresh store : ", refresh);
-
-    // Check if the 'refresh' value was stored successfully
-    const storedRefresh = secureLocalStorage.getItem(
-      process.env.NEXT_PUBLIC_SECURE_LOCAL_STORAGE_PREFIX
-    );
-    if (storedRefresh === refresh) {
-      console.log("Confirmed: 'refresh' is stored in secureLocalStorage.");
-    } else {
-      console.error("Failed to confirm: 'refresh' is not stored in secureLocalStorage.");
-    }
+    
   } catch (e) {
     // Log the error if any of the storage operations fail
     console.error("Storage operation failed: ", e);
@@ -68,9 +46,7 @@ export function secureRefresh(refresh) {
 export function decrypt(ciphertext, secretKey) {
   try {
     const bytes = CryptoJS.AES.decrypt(ciphertext.toString(), secretKey);
-    console.log("bytes: ", bytes)
     const plaintext = bytes.toString(CryptoJS.enc.Utf8);
-    console.log("plaintext: ", plaintext)
     if (plaintext === '') {
       throw new Error('Decryption succeeded but returned an empty string.');
     }
@@ -85,7 +61,6 @@ export function decrypt(ciphertext, secretKey) {
 export async function getDecryptedRefresh() {
   try {
     const encryptedRefresh =  getRefresh();
-    console.log("get refresh token from local storage: ", encryptedRefresh);
     if (!encryptedRefresh) {
       console.error("Encrypted refresh token is empty.");
       return null;
@@ -99,7 +74,6 @@ export async function getDecryptedRefresh() {
       encryptedRefresh,
       process.env.NEXT_PUBLIC_SECRET_KEY
     );
-    console.log("result decrypted refresh: ", decryptedRefresh);
 
     if (!decryptedRefresh) {
       console.error("Decryption failed or returned an empty result.");
@@ -120,10 +94,7 @@ export function getRefresh() {
   );
   if (typeof refresh === 'undefined') {
     console.error("No refresh token found in secureLocalStorage.");
-  } else {
-    console.log("Retrieved refresh token:", refresh);
   }
-  console.log("functiion get refresh token: ",refresh)
   return refresh;
 }
 
