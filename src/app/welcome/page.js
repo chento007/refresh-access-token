@@ -40,6 +40,7 @@ export default function Welcome() {
     content = (
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
         Welcome {user?.username}
+        <h1>{user?.created_at}</h1>
       </div>
     );
   } else if (isError) {

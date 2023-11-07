@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { logout, setCredentials, setCurrentUser } from "../features/auth/authSlice";
-import { getDecryptedRefresh } from "@/lib/cryptography";
+import { getRefresh } from "@/lib/cryptography";
 
 // create base query with authentication
 const baseQuery = fetchBaseQuery({
@@ -17,11 +17,9 @@ const baseQuery = fetchBaseQuery({
 });
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  console.log("result from base query: ",result)
   if (result?.error?.status === 401) {
     // Attempt to get a new access token using the refresh token
-    const refresh = await getDecryptedRefresh();
-    console.log("refresh 100%: ",refresh)
+    const refresh =  getRefresh();
     if (refresh) {
       try {
         // Try refreshing the token
@@ -34,7 +32,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
           api,
           extraOptions
         );
-
+        console.log("result refresh token : ",refreshResult)
         // Check if the refresh was successful
         if (refreshResult?.data) {
           // Dispatch the new credentials to the store
@@ -45,7 +43,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
           // Refreshing the token failed, log out the user
           api.dispatch(logout());
           // Consider using a more user-friendly notification system than alert
-          console.error("Session expired. Please log in again.");
+          console.error("Session expired. Please log in again. 1");
         }
       } catch (error) {
         console.error("Failed to refresh access token", error);
@@ -53,7 +51,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
       }
     } else {
       api.dispatch(logout());
-      console.error("Session expired. Please log in again.");
+      console.error("Session expired. Please log in again. 2");
     }
   }
   return result;
