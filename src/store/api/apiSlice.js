@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { logout, setCredentials, setCurrentUser } from "../features/auth/authSlice";
-import { getRefresh } from "@/lib/cryptography";
+import { getRefresh,getDecryptedRefresh } from "@/lib/cryptography";
 
 // create base query with authentication
 const baseQuery = fetchBaseQuery({
@@ -19,7 +19,8 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 401) {
     // Attempt to get a new access token using the refresh token
-    const refresh =  getRefresh();
+    const refresh = await getDecryptedRefresh();
+    console.log("get decrypted refresh token: ",refresh)
     if (refresh) {
       try {
         // Try refreshing the token

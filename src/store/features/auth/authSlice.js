@@ -1,4 +1,4 @@
-import { removeRefresh, storeRefresh } from "@/lib/cryptography";
+import { removeRefresh, storeRefresh,secureRefresh } from "@/lib/cryptography";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -12,7 +12,7 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action) => {
       state.access = action.payload.access;
-      storeRefresh(action.payload.refresh);
+      secureRefresh(action.payload.refresh);
     },
     setCurrentUser: (state, action) => {
       state.user = action.payload;
