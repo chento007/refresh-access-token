@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Welcome() {
+  
   const {
     data: user,
     isLoading,
@@ -13,6 +14,7 @@ export default function Welcome() {
     isError,
     error,
   } = useGetUserQuery();
+
   const data = useSelector((state) => state);
 
   const dispatch = useDispatch();
