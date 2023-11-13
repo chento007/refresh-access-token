@@ -9,11 +9,13 @@ export const authOptions = {
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             profile: async (profile) => {
+                console.log("profile from route.js: ", profile)
                 return {
                     id: profile.sub,
                     name: profile.name,
                     email: profile.email,
                     image: profile.picture,
+                    hash: profile.at_hash
                 };
             },
 
@@ -26,9 +28,11 @@ export const authOptions = {
             return "http://localhost:3000/"
         },
         async session({ session, user, token }) {
+
             return session
         },
-        async jwt({ token, user, account, profile, isNewUser }) {
+        async jwt({ token, account, profile }) {
+            console.log("token : ", token)
             return token
         }
 
