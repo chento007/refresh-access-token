@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import FormLogin from "./components/Form";
+import  FormLogin  from "./components/Form";
+import  LoginTest  from './components/LoginTest';
 
 export default function Login() {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function Login() {
           className="w-1/4 rounded-lg"
         />
         <FormLogin />
+        <LoginTest/>
       </div>
     </main>
   );
