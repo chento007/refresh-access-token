@@ -24,8 +24,7 @@ export const authOptions = {
     ],
     callbacks: {
         async redirect({ url, baseUrl }) {
-            console.log("redirect", url, baseUrl)
-            return "http://localhost:3000/"
+            return baseUrl;
         },
         async session({ session, user, token }) {
 

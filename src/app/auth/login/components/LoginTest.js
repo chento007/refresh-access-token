@@ -6,7 +6,7 @@ function LoginPage() {
   const { data: session } = useSession();
 
   const handleSignInWithGoogle = () => {
-    signIn("google", { callbackUrl: "http://localhost:3000/" });
+    signIn("google", { callbackUrl: process.env.NEXTAUTH_URL });
   };
   console.log("seesion from login",session)
   return (
