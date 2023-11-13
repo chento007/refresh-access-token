@@ -8,6 +8,7 @@ export default function Home() {
   if (status === 'loading') {
     return <p>Loading...</p>;
   }
+  console.log("session from home page: ",session)
   if (session) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
