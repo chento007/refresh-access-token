@@ -35,7 +35,6 @@ export default function FormLogin() {
     try {
       // .unwrap() is a utility function that will return either the fulfilled value or throw the rejected value as an error.
       const { data } = await login({ email, password }).unwrap();
-        console.log("data", data);
       dispatch(
         setCredentials(data)
       );

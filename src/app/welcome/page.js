@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Welcome() {
+  
   const {
     data: user,
     isLoading,
@@ -13,20 +14,18 @@ export default function Welcome() {
     isError,
     error,
   } = useGetUserQuery();
+
   const data = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isSuccess) {
-      console.log("user", user);
       dispatch(setCurrentUser(user));
     }
   }, []);
 
   // removeRefreshToken()
-
-  console.log("user", user);
 
   let content = null;
   
@@ -39,7 +38,8 @@ export default function Welcome() {
   } else if (isSuccess) {
     content = (
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
-        Welcome {user?.username}
+        Welcome {user?.data?.username}
+        <h1>{user?.created_at}</h1>
       </div>
     );
   } else if (isError) {

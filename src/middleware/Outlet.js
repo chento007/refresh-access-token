@@ -11,8 +11,5 @@ export default function Outlet({ children }) {
   const token = useSelector(selectCurrentAccessToken);
   const user = useSelector(selectCurrentUser);
   console.log("token", token);
-    console.log("user", user);
-
-
   return children;
 }
